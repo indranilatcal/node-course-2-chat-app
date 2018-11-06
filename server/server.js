@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
         var user = users.getUser(socket.id);
         
         if(user && isRealString(message.text)){
-            io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+            socket.broadcast.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
         }
         callback();
     });
@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
         var user = users.getUser(socket.id);
 
         if(user && coords && coords.latitude && coords.longitude){
-            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
+            socket.broadcast.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
         }
     });
 
